@@ -296,8 +296,7 @@ Xcode内の画面で，`Device`ボタンをクリックして`View Device Logs`�
 
 ## このチュートリアルのまとめ
 
-このチュートリアル
-In this tutorial, you used Bazel to build an iOS app. To accomplish that, you:
+このチュートリアルでは，iOSアプリケーションをビルドするためにBazelを使いました．そして，以下のことを成し遂げました．  
 
 *   Set up your environment by installing Bazel and Xcode, and downloading the
     sample project
