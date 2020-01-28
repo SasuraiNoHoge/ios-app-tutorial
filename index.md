@@ -46,13 +46,13 @@ git clone -b source-only https://github.com/bazelbuild/examples
 以下のURLに`master`ブランチのリンクを示します．  
 [https://github.com/bazelbuild/examples/tree/master/tutorial](https://github.com/bazelbuild/examples/tree/master/tutorial)  
 
-`git clone`コマンドから入手したディレクトリは$HOME/workspace/bazel/examplesになっています．  
+`git clone`コマンドから入手したディレクトリは`$HOME/workspace/bazel/examples`になっています．  
 このディレクトリにはBazelのためのいくつかのプロジェクト(iOSだけでなくandroidなども)が含まれます．  
 今回のチュートリアルでは，`$HOME/workspace/bazel/examples/tutorial/ios-app`が対象となっています．
 
 ## workspaceのセットアップ
 
-現在の作業ディレクトリには1種以上のソフトウェアプロジェクトが含まれています．また，バゼルがソフトウェアをビルドするために使用するコードは`WORKSPACE`ファイルと`BUILD`ファイルの二種類から構成されています．今回の作業ディレクトリは`$HOME/workspace/bazel/examples/tutorial`です．  
+現在の作業ディレクトリには1種以上のソフトウェアプロジェクトが含まれています．また，Bazelがソフトウェアをビルドするために使用するコードは`WORKSPACE`ファイルと`BUILD`ファイルの二種類から構成されています．今回の作業ディレクトリは`$HOME/workspace/bazel/examples/tutorial`です．  
 このディレクトリ上に次項で，`WORKSPACE`ファイルを作成します．また，`$HOME/workspace/bazel/examples/tutorial`の入力をいちいちするのが面倒な場合は，以下のコマンドで`$WORKSPACE`に置換することができます．
 
 ```bash
@@ -140,7 +140,7 @@ load("@build_bazel_rules_apple//apple:ios.bzl", "ios_application")
 
 Bazelでは，iOSプラットフォームをビルドするために使うことができるいくつかのビルドルールが存在します．このチュートリアルでは，最初に`objc_library`ruleを使って，アプリのソースコードやXibファイルから静的なライブラリをビルドする方法を伝えます．それから，`ios_application`ルールを使って，アプリのバイナリや`.ipa`bundleのビルド方法について紹介します．  
 
-**メモ:** このチュートリアルは最小限のBazelのObjective-Cのrulesのケースを使います．例えば，あなたが，iOSアプリをmulti-architectureでビルドするためには`[iOS_application](https://github.com/bazelbuild/rules_apple/tree/master/doc)`ruleを使わなければなりません．
+**メモ:** このチュートリアルは最小限のBazelのObjective-Cのrulesのケースを使います．例えば，あなたが，iOSアプリをmulti-architectureでビルドするためには[iOS_application](https://github.com/bazelbuild/rules_apple/tree/master/doc)のruleを使わなければなりません．
 
 以下のコードを`BUILD`ファイルの末尾に追加してください．
 
@@ -157,11 +157,12 @@ objc_library(
 )
 ```
 
-ここでは，ruleのnameをUrlGetClassesに設定しました．
+ここでは，`ojbc_library`ruleの`name`属性を`UrlGetClasses`に設定しました．  
+ここで設定した`name`の値は次項のios_applicationのruleと関連付けるために使います．
 
 ### ios_application ruleの追加
 
-`ios_application`ruleはapplication binaryのビルドと，'.ipa'bundle ファイルを作成します．
+`ios_application`ruleはapplication binaryのビルドと，`.ipa`bundle ファイルを作成します．
 
 `BUILD`ファイルの末尾に以下の行を追加してください
 
@@ -190,7 +191,7 @@ ios_application(
 
 iOSデバイスのシミュレータ上でのビルドとデプロイの準備が整いました．
 
-**メモ:** アプリケーションをスタンドアロンで実行できますが，出力するためのbackend サーバが必要です．backend serverをビルドするための sample project directryからREADME ファイルを確認してください．
+**メモ:** アプリケーションをスタンドアロンで実行できますが，出力するためのbackend サーバが必要です．backend serverをビルドするための sample project directryから`README` ファイルを確認してください．
 
 ### シミュレータのためのアプリケーションをビルド
 
@@ -224,8 +225,8 @@ INFO: Elapsed time: 0.565s, Critical Path: 0.44s
 
 ### シミュレータを用いたアプリケーションの実行とデバッグ
 
-iOSシミュレータを用いてXcodeからアプリケーションを実行できます．最初に[Tulsiを使ったXcode project]((http://tulsi.bazel.io/)を生成します．  
-それから,Xcodeを開いて，runtime schemeとしてiOSSimulatorを選択します．そして，Runを選択します．
+iOSシミュレータを用いてXcodeからアプリケーションを実行できます．最初に[Tulsiを使ったXcode project](http://tulsi.bazel.io/)を生成します．  
+それから,Xcodeを開いて，runtime schemeとしてiOS Simulatorを選択します．そして，Runを選択します．
 
 **メモ:** Xcod内のプロジェクトを修正するなら，(例えば，ファイルを追加したり削除したなら，もしくは依存関係を追加変更したなら)再度Bazelを使ってアプリケーションを再ビルドしなければなりません．それに加えて，TulsiのXcode projectを作り直したり，Xcodeを開き直す必要もあります．
 
@@ -279,7 +280,7 @@ bazel build //ios-app:ios-app --ios_multi_cpus=armv7,arm64
 
 最小のiOSバージョンを指定するために，`minimum_os_version`を`BUILD`ファイル内の`ios_application`のパラメータとして設定しておいてください．
 
-コマンドラインよりもむしろGUIを使ってアプリケーションをビルドしたい場合は，[Tulsi]((http://tulsi.bazel.io/docs/gettingstarted.html)を利用することができます．
+コマンドラインよりもむしろGUIを使ってアプリケーションをビルドしたい場合は，[Tulsi](http://tulsi.bazel.io/docs/gettingstarted.html)を利用することができます．
 
 ### デバイス上でのアプリケーションのインストール
 
@@ -299,19 +300,72 @@ Xcode内の画面で，`Device`ボタンをクリックして`View Device Logs`�
 このチュートリアルでは，iOSアプリケーションをビルドするためにBazelを使いました．そして，以下のことを成し遂げました．  
 
 *   BazelとXcodeのインストール，そしてsample projectのダウンロードによる環境構築
+*   プロジェクト内の`WORKSPACE`ファイルの配置位置
+*   `WORKSPACE`ファイの更新と外部の依存関係の更新
+*   `BUILD`ファイルの作成
+*   Bazelを使ってiOSデバイスとシミュレータでアプリケーションをビルドして実行
 
-*   Set up a Bazel [workspace](workspace.md) that contained the source code
-    for the app and a `WORKSPACE` file that identifies the top level of the
-    workspace directory
-*   Updated the `WORKSPACE` file to contain references to the required
-    external dependencies
-*   Created a `BUILD` file
-*   Ran Bazel to build the app for the simulator and an iOS device
-*   Ran the app in the simulator and on an iOS device
+ビルドされたアプリケーションは，`$WORKSPACE/bazel-bin`ディレクトリに配置されます．
 
-The built app is located in the `$WORKSPACE/bazel-bin` directory.
+以下にprovisioning_profileの名前が，`provisioning_profile.mobileprovision`の場合の
+このチュートリアルの完成した`WORKSPACE`と`BUILD`ファイルを示します．  
+`WORKSPACE`  
 
-Completed `WORKSPACE` and `BUILD` files for this tutorial are located in the
-[master branch](https://github.com/bazelbuild/examples/tree/master/tutorial)
-of the GitHub repo. You can compare your work to the completed files for
-additional help or troubleshooting.
+```
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+git_repository(
+    name = "build_bazel_rules_apple",
+    remote = "https://github.com/bazelbuild/rules_apple.git",
+    tag = "0.19.0",
+)
+git_repository(
+    name = "build_bazel_rules_swift",
+    remote = "https://github.com/bazelbuild/rules_swift.git",
+	tag = "0.13.0",
+)
+
+git_repository(
+    name = "build_bazel_apple_support",
+    remote = "https://github.com/bazelbuild/apple_support.git",
+	tag = "0.7.2",
+)
+
+git_repository(
+    name = "bazel_skylib",
+    remote = "https://github.com/bazelbuild/bazel-skylib.git",
+    tag = "0.9.0",
+)
+```
+
+`BUILD`  
+
+```
+load("@build_bazel_rules_apple//apple:ios.bzl", "ios_application")
+
+objc_library(
+    name = "UrlGetClasses",
+    srcs = [
+         "UrlGet/AppDelegate.m",
+         "UrlGet/UrlGetViewController.m",
+         "UrlGet/main.m",
+    ],
+    hdrs = glob(["UrlGet/*.h"]),
+    data = ["UrlGet/UrlGetViewController.xib"],
+)
+
+ios_application(
+    name = "ios-app",
+    bundle_id = "Google.UrlGet",
+    families = [
+        "iphone",
+        "ipad",
+    ],
+    provisioning_profile = "provisioning_profile.mobileprovision",
+    minimum_os_version = "9.0",
+    infoplists = [":UrlGet/UrlGet-Info.plist"],
+    visibility = ["//visibility:public"],
+    deps = [":UrlGetClasses"],
+)
+```
+
+`また，完成した`WORKSPACE`と`BUILD`ファイルはGitHubリポジトリの[master](https://github.com/bazelbuild/examples/tree/master/tutorial)ブランチからも確認することができます．問題が起こったり，ファイルを追加したい時などに比較することができます．
