@@ -63,14 +63,13 @@ export WORKSPACE=$HOME/workspace/bazel/examples/tutorial
 
 作業ディレクトリごとに`WORKSPACE`ファイルを作業ディレクトリのルートに生成しなければなりません．このファイルは空かソフトウェアをビルドするための外部の依存関係を含むかもしれません．  
 
-さて，`WORKSPACE`ファイルを作っていきましょう． 以下のコマンドを入力してください．(open XCodeコマンドが実行できなかった場合は直接ディレクトリから開くのも可)
+さて，`WORKSPACE`ファイルを作っていきましょう． 以下のコマンドを入力してください．(open XCodeコマンドが実行できなかった場合は直接ディレクトリから開くのも可)  
+以下のコマンドを入力することで`$WORKSPACE`直下に`WORKSPACE`ファイルを配置し，XCodeで開きます．
 
 ```bash
 touch $WORKSPACE/WORKSPACE
 open -a Xcode $WORKSPACE/WORKSPACE
 ```
-
-これにより空の`WORKSPACE`ファイルが生成されました．
 
 ### Update the WORKSPACE file
 
