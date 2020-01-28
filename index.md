@@ -298,8 +298,8 @@ Xcode内の画面で，`Device`ボタンをクリックして`View Device Logs`�
 
 このチュートリアルでは，iOSアプリケーションをビルドするためにBazelを使いました．そして，以下のことを成し遂げました．  
 
-*   Set up your environment by installing Bazel and Xcode, and downloading the
-    sample project
+*   BazelとXcodeのインストール，そしてsample projectのダウンロードによる環境構築
+
 *   Set up a Bazel [workspace](workspace.md) that contained the source code
     for the app and a `WORKSPACE` file that identifies the top level of the
     workspace directory
