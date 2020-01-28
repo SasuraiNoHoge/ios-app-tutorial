@@ -227,24 +227,19 @@ INFO: Elapsed time: 0.565s, Critical Path: 0.44s
 iOSシミュレータを用いてXcodeからアプリケーションを実行できます．最初に[Tulsiを使ったXcode project]((http://tulsi.bazel.io/)を生成します．  
 それから,Xcodeを開いて，runtime schemeとしてiOSSimulatorを選択します．そして，Runを選択します．
 
-**メモ:** Xcod内の
+**メモ:** Xcod内のプロジェクトを修正するなら，(例えば，ファイルを追加したり削除したなら，もしくは依存関係を追加変更したなら)再度Bazelを使ってアプリケーションを再ビルドしなければなりません．それに加えて，TulsiのXcode projectを作り直したり，Xcodeを開き直す必要もあります．
 
-**Note:** If you modify any project files in Xcode (for example, if you add or
-remove a file, or add or change a dependency), you must rebuild the app using
-Bazel, re-generate the Xcode project in Tulsi, and then re-open the project in
-Xcode.
+### デバイスにおけるアプリケーションのビルド
 
-### Build the app for a device
+iOSデバイスをインストールして実行するためのアプリケーションのビルドには，Bazelはデバイスモデルの適切なprovisioning profileが必要です．  
+以下にprovision profileの入手手順について示します．
 
-To build your app so that it installs and launches on an iOS device, Bazel needs
-the appropriate provisioning profile for that device model. Do the following:
+1. [Apple Developer Account]((https://developer.apple.com/account)にアクセスして，あなたのデバイスにあったprovisioning profileをダウンロードしてください．さらに情報を知りたければ[Apple's documentation](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingProfiles/MaintainingProfiles.html)をご覧ください．  
 
-1. Go to your [Apple Developer Account](https://developer.apple.com/account) and
-   download the appropriate provisioning profile for your device. See
-   [Apple's documentation](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingProfiles/MaintainingProfiles.html)
-   for more information.
+2. ダウンロードしたprofileを`$WORKSPACE`にコピペしてください．  
 
-2. Move your profile into `$WORKSPACE`.
+3. (選択) `.gitignore`ファイルを作成して，ダウンロードしたprofileを`.gitignore`に記述してください．
+
 
 3. (Optional) Add your profile to your `.gitignore` file.
 
