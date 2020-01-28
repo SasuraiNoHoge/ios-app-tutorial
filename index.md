@@ -7,7 +7,7 @@ title: Build Tutorial - iOS
 この文書は以下のbazelbuild/bazelレポジトリを雰囲気で訳して図を追加したものです．  
 [https://github.com/bazelbuild/bazel/blob/master/site/docs/tutorial/ios-app.md](https://github.com/bazelbuild/bazel/blob/master/site/docs/tutorial/ios-app.md)  
 
-# BazelからiOS Appを構築する手順の紹介
+# BazelからiOS Appを構築する手順の紹介[2020年版]
 
 このチュートリアルでは，単純なiOS appの構築方法を紹介します. 
 このチュートリアルを終える頃にはあなたは以下のことを行うようになるでしょう．
@@ -71,12 +71,13 @@ touch $WORKSPACE/WORKSPACE
 open -a Xcode $WORKSPACE/WORKSPACE
 ```
 
-### Update the WORKSPACE file
+以下に現在のディレクトリの画像を示します．  
+![WORKSPACを作成した階層](tree.png)
 
-To build applications for Apple devices, Bazel needs to pull the latest
-[Apple build rules](https://github.com/bazelbuild/rules_apple) from its GitHub
-repository. To enable this, add the following [`git_repository`](../be/workspace.html#git_repository)
-rules to your `WORKSPACE` file:
+### WORKSPACEファイルの記述
+
+Appleデバイスのアプリケーションをビルドするために,BazelはGitHubから最新の[Apple build rules](https://github.com/bazelbuild/rules_apple)
+をpullする必要があります．これを可能にするためには以下のように記述することで解決します．  
 
 ```
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
@@ -104,14 +105,13 @@ git_repository(
 )
 ```
 
-**NOTE:** "Always use the [latest version of the build_apple rules](https://github.com/bazelbuild/rules_apple/releases)
-in the `tag` attribute. Make sure to check the latest dependencies required in
-`rules_apple`'s [project](https://github.com/bazelbuild/rules_apple)."
+**メモ:** "常にコード内の`tag`属性は[最新のapple rules](https://github.com/bazelbuild/rules_apple/releases)にしておいてください．また，コード内の`rules_apple`の依存関係で要求される属性は[こちら](https://github.com/bazelbuild/rules_apple)です"  
 
-**NOTE:** You **must** set the value of the `name` attribute in the
-`git_repository` rule to `build_bazel_rules_apple` or the build will fail.
+**メモ:** "コード内の`build_bazel_rules_apple`の`git_repository`にて**必ず**`name`属性に値を入れてください．値がなければビルドが失敗します．"
 
-## Review the source files
+## 今回ビルドするソースファイルについて
+今回のチュートリアルでは`WORKSPACE/ios-app/UrlGet`内のソースコードをビルドします．現状では3種類のソースコードがあることを確認してください．また今回のチュートリアルではこれらのソースコードは編集しません．以下にUrlGet内の階層構造を示します．
+
 
 Take a look at the source files for the app located in
 `$WORKSPACE/ios-app/UrlGet`. Again, you're just looking at these files now to
