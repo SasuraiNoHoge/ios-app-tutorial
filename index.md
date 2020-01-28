@@ -50,49 +50,27 @@ git clone -b source-only https://github.com/bazelbuild/examples
 このディレクトリにはBazelのためのいくつかのプロジェクト(iOSだけでなくandroidなども)が含まれます．  
 今回のチュートリアルでは，`$HOME/workspace/bazel/examples/tutorial/ios-app`が対象となっています．
 
-## Set up a workspace
+## workspaceのセットアップ
 
-A [workspace](../build-ref.html#workspaces) is a directory that contains the
-source files for one or more software projects, as well as a `WORKSPACE` file
-and `BUILD` files that contain the instructions that Bazel uses to build
-the software. The workspace may also contain symbolic links to output
-directories.
-
-A workspace directory can be located anywhere on your filesystem and is denoted
-by the presence of the `WORKSPACE` file at its root. In this tutorial, your
-workspace directory is `$HOME/examples/tutorial/`, which contains the sample
-project files you cloned from the GitHub repo in the previous step.
-
-Note that Bazel itself doesn't impose any requirements for organizing source
-files in your workspace. The sample source files in this tutorial are organized
-according to conventions for the target platform.
-
-For your convenience, set the `$WORKSPACE` environment variable now to refer to
-your workspace directory. At the command line, enter:
+現在の作業ディレクトリには1種以上のソフトウェアプロジェクトが含まれています．また，バゼルがソフトウェアをビルドするために使用するコードは`WORKSPACE`ファイルと`BUILD`ファイルの二種類から構成されています．今回の作業ディレクトリは`$HOME/workspace/bazel/examples/tutorial`です．  
+このディレクトリ上に次項で，`WORKSPACE`ファイルを作成します．また，`$HOME/workspace/bazel/examples/tutorial`の入力をいちいちするのが面倒な場合は，以下のコマンドで`$WORKSPACE`に置換することができます．
 
 ```bash
-export WORKSPACE=$HOME/examples/tutorial
+export WORKSPACE=$HOME/workspace/bazel/examples/tutorial
 ```
 
-### Create a WORKSPACE file
+### WORKSPACE ファイルの作成
 
-Every workspace must have a text file named `WORKSPACE` located in the top-level
-workspace directory. This file may be empty or it may contain references
-to [external dependencies](../external.html) required to build the
-software.
+作業ディレクトリごとに`WORKSPACE`ファイルを作業ディレクトリのルートに生成しなければなりません．このファイルは空かソフトウェアをビルドするための外部の依存関係を含むかもしれません．  
 
-For now, you'll create an empty `WORKSPACE` file, which simply serves to
-identify the workspace directory. In later steps, you'll update the file to add
-external dependency information.
-
-Enter the following at the command line:
+さて，`WORKSPACE`ファイルを作っていきましょう． 以下のコマンドを入力してください．(open XCodeコマンドが実行できなかった場合は直接ディレクトリから開くのも可)
 
 ```bash
 touch $WORKSPACE/WORKSPACE
 open -a Xcode $WORKSPACE/WORKSPACE
 ```
 
-This creates and opens the empty `WORKSPACE` file.
+これにより空の`WORKSPACE`ファイルが生成されました．
 
 ### Update the WORKSPACE file
 
