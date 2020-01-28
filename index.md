@@ -4,55 +4,51 @@ title: Build Tutorial - iOS
 ---
 
 # 注意!  
-この文書はbazelbuild/bazelレポジトリ  
+この文書は以下のbazelbuild/bazelレポジトリを雰囲気で訳して図を追加したものです．  
 [https://github.com/bazelbuild/bazel/blob/master/site/docs/tutorial/ios-app.md](https://github.com/bazelbuild/bazel/blob/master/site/docs/tutorial/ios-app.md)  
-を雰囲気で訳して図を追加したものです  
 
 # BazelからiOS Appを構築する手順の紹介
 
-このチュートリアルでは，単純なiOS appの構築方法を紹介します.
-In this tutorial, you will learn how to build a simple iOS app. You'll do the
-following:
+このチュートリアルでは，単純なiOS appの構築方法を紹介します. 
+このチュートリアルを終える頃にはあなたは以下のことを行うようになるでしょう．
 
 * ToC
 {:toc}
 
 
-## Set up your environment
+## 環境構築
 
-To get started, install Bazel and Xcode, and get the sample project.
+BazelとXcodeをインストールし，sample projectをGitHubからクローンしてください．
 
-### Install Bazel
+### Bazelのインストール
 
-Follow the [installation instructions](../install.md) to install Bazel and
-its dependencies.
+Bazelのインストールは以下のURLを参考にしてください．  
+[https://github.com/bazelbuild/bazel/blob/master/site/docs/install.md](https://github.com/bazelbuild/bazel/blob/master/site/docs/install.md)
 
-### Install Xcode
+### XCodeのインストール
 
-Download and install [Xcode](https://developer.apple.com/xcode/downloads/).
-Xcode contains the compilers, SDKs, and other tools required by Bazel to build
-Apple applications.
+以下のURLからXCodeをDLしてインストールしてください．  
+[https://developer.apple.com/xcode/downloads/](https://developer.apple.com/xcode/downloads/).  
+XCodeはAppleのアプリをビルドするためのコンパイラやSDK，bazelに必要なその他のツールが含まれています．
 
-### Get the sample project
+### サンプルプロジェクトのクローン
 
-You also need to get the sample project for the tutorial from GitHub. The GitHub
-repo has two branches: `source-only` and `master`. The `source-only` branch
-contains the source files for the project only. You'll use the files in this
-branch in this tutorial. The `master` branch contains both the source files
-and completed Bazel `WORKSPACE` and `BUILD` files. You can use the files in this
-branch to check your work when you've completed the tutorial steps.
-
-Enter the following at the command line to get the files in the `source-only`
-branch:
+作業したいディレクトリに移動してGitHubからチュートリアルのためのサンプルプロジェクトをクローンしてください．  
 
 ```bash
 cd $HOME
+cd workspace/bazel #任意，今回はworkspace/bazel
 git clone -b source-only https://github.com/bazelbuild/examples
-```
+```  
+このクローンしたリポジトリには本来`source-only`と`master`の2種類のブランチがあります．  
+`source-only`ブランチはビルド前のファイルのみで構成されています．今回のチュートリアルではこちらのブランチを使います．  
+`master`ブランチはBazelに用いる`WORKSPACE`と`BUILD`ファイルを含んでおり，チュートリアル作業中にエラーが発生した時に比較して原因を突き止める手掛かりになります．  
+以下のURLに`master`ブランチのリンクを示します．  
+[https://github.com/bazelbuild/examples/tree/master/tutorial](https://github.com/bazelbuild/examples/tree/master/tutorial)  
 
-The `git clone` command creates a directory named `$HOME/examples/`. This
-directory contains several sample projects for Bazel. The project files for this
-tutorial are in `$HOME/examples/tutorial/ios-app`.
+`git clone`コマンドから入手したディレクトリは$HOME/workspace/bazel/examplesになっています．  
+このディレクトリにはBazelのためのいくつかのプロジェクト(iOSだけでなくandroidなども)が含まれます．  
+今回のチュートリアルでは，`$HOME/workspace/bazel/examples/tutorial/ios-app`が対象となっています．
 
 ## Set up a workspace
 
