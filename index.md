@@ -206,7 +206,7 @@ sampleアプリケーションをビルドするために以下のコマンド�
 bazel build //ios-app:ios-app
 ```
 
-Bazelが作動して，sampleアプリケーションをビルドします．ビルド中は，以下のような出力が現れます．
+Bazelが作動して，sampleアプリケーションをビルドします．ビルド中は以下のような出力が現れます．
 
 ```bash
 INFO: Found 1 target...
@@ -218,15 +218,16 @@ INFO: Elapsed time: 0.565s, Critical Path: 0.44s
 ### 出力されたファイルを見つける
 
 `.ipa`ファイルとそれ以外の出力が`$WORKSPACE/bazel-bin/ios-app`ディレクトリに位置付けられます．  
-以下に$WORKSPACEから見た.ipaの階層構造を示します．
+以下に`$WORKSPACE`から見た`.ipa`の階層構造を示します．  
+![階層構造](tree4.png)
 
 
-### Run and debug the app in the simulator
+### シミュレータを用いたアプリケーションの実行とデバッグ
 
-You can now run the app from Xcode using the iOS Simulator. First, [generate an Xcode project using Tulsi](http://tulsi.bazel.io/).
+iOSシミュレータを用いてXcodeからアプリケーションを実行できます．最初に[Tulsiを使ったXcode project]((http://tulsi.bazel.io/)を生成します．  
+それから,Xcodeを開いて，runtime schemeとしてiOSSimulatorを選択します．そして，Runを選択します．
 
-Then, open the project in Xcode, choose an iOS Simulator as the runtime scheme,
-and click **Run**.
+**メモ:** Xcod内の
 
 **Note:** If you modify any project files in Xcode (for example, if you add or
 remove a file, or add or change a dependency), you must rebuild the app using
