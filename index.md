@@ -243,7 +243,10 @@ iOSデバイスをインストールして実行するためのアプリケー�
    ```
    *.mobileprovision
    ```
-
+   
+   以下に`$HOME`から見た`.gitignore`の階層を示します．  
+   ![階層構造](tree5.png)
+   
 4. `BUILD`ファイル内の`ios_application`内に以下の行を追加してください．  
    また，`<your_profile_name>`にはダウンロードしたprofileの名前に置き換えてください．
 
@@ -256,6 +259,8 @@ iOSデバイスをインストールして実行するためのアプリケー�
    ```python
    provisioning_profile = "provisioning_profile.mobileprovision",
    ```
+   また，`$WORKSPACE`から見た`provisioning_profile.mobileprovision`の階層を示します．  
+   ![階層構造](tree6.png)
    
    **メモ:**  デバイスにインストールしたアプリとprofileが正しいことを確認しておいてください．
 
