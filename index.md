@@ -270,36 +270,33 @@ iOSデバイスをインストールして実行するためのアプリケー�
 bazel build //ios-app:ios-app --ios_multi_cpus=armv7,arm64
 ```
 
-This builds the app as a fat binary. To build for a specific device
-architecture, designate it in the build options.
+このコマンドは，fat binaryとしてアプリケーションをビルドします．  
+痩せるためには，特定のデバイスのアーキテクチャとしてビルドするために，build optionsを指定する必要があります．
 
-To build for a specific Xcode version, use the `--xcode_version` option. To
-build for a specific SDK version, use the `--ios_sdk_version` option. The
-`--xcode_version` option is sufficient in most scenarios.
+特定のXcodeのバージョンでビルドするために，`--xcode_version`optionが利用できます．  
+また，特定のSDKバージョンを利用する場合は`--ios_sdk_version`optionを利用してください．  
+`--xcode_version`optionは多くの場合に用いられる可能性があります．
 
-To specify a minimum required iOS version, add the `minimum_os_version`
-parameter to the `ios_application` build rule in your `BUILD` file.
+最小のiOSバージョンを指定するために，`minimum_os_version`を`BUILD`ファイル内の`ios_application`のパラメータとして設定しておいてください．
 
-You can also use [Tulsi](http://tulsi.bazel.io/docs/gettingstarted.html) to
-build your app using a GUI rather than the command line.
+コマンドラインよりもむしろGUIを使ってアプリケーションをビルドしたい場合は，[Tulsi]((http://tulsi.bazel.io/docs/gettingstarted.html)を利用することができます．
 
-### Install the app on a device
+### デバイス上でのアプリケーションのインストール
 
-The easiest way to install the app on the device is to launch Xcode and use the
-`Windows > Devices` command. Select your plugged-in device from the list on the
-left, then add the app by clicking the **Add** (plus sign) button under
-"Installed Apps" and selecting the `.ipa` file that you built.
+デバイスのアプリケーションをインストールするための最も簡単な方法は，Xcodeを起動して，  
+`Windows > Devices`から左のリストの使用するデバイスを選択し，**Add**(+マーク)をクリックして，  
+下の"Installed Apps"と`selecting the`から先程作成した`.ipa`ファイルを選択してください．  
+再度，以下に`$WORKSPACE`から見た`.ipa`の階層構造を示します．  
+![階層構造](tree4.png)
 
-If your app fails to install on your device, ensure that you are specifying the
-correct provisioning profile in your `BUILD` file (step 4 in the previous
-section).
+もし，デバイスにアプリケーションのインストールが失敗したら,`BUILD`ファイル内のprovisioning profileが正しいかを確認してください．  
 
-If your app fails to launch, make sure that your device is part of your
-provisioning profile. The `View Device Logs` button on the `Devices` screen in
-Xcode may provide other information as to what has gone wrong.
+もし，アプリケーションの開始が失敗したら，provisioning profileの一部に原因がある可能性があります．  
+Xcode内の画面で，`Device`ボタンをクリックして`View Device Logs`から，エラーの手掛かりが掴めるかもしれません．
 
-## Review your work
+## このチュートリアルのまとめ
 
+このチュートリアル
 In this tutorial, you used Bazel to build an iOS app. To accomplish that, you:
 
 *   Set up your environment by installing Bazel and Xcode, and downloading the
