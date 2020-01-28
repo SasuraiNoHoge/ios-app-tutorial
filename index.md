@@ -234,25 +234,32 @@ iOSシミュレータを用いてXcodeからアプリケーションを実行で
 iOSデバイスをインストールして実行するためのアプリケーションのビルドには，Bazelはデバイスモデルの適切なprovisioning profileが必要です．  
 以下にprovision profileの入手手順について示します．
 
-1. [Apple Developer Account]((https://developer.apple.com/account)にアクセスして，あなたのデバイスにあったprovisioning profileをダウンロードしてください．さらに情報を知りたければ[Apple's documentation](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingProfiles/MaintainingProfiles.html)をご覧ください．  
+1. [Apple Developer Account](https://developer.apple.com/account)にアクセスして，あなたのデバイスにあったprovisioning profileをダウンロードしてください．さらに情報を知りたければ[Apple's documentation](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingProfiles/MaintainingProfiles.html)をご覧ください．  
 
 2. ダウンロードしたprofileを`$WORKSPACE`にコピペしてください．  
 
-3. (選択) `.gitignore`ファイルを作成して，ダウンロードしたprofileを`.gitignore`に記述してください．
+3. (選択) `.gitignore`ファイルを作成して，ダウンロードしたprofileを`.gitignore`に以下のように記述してください．
 
+   ```
+   *.mobileprovision
+   ```
 
-3. (Optional) Add your profile to your `.gitignore` file.
-
-4. Add the following line to the `ios_application` target in your `BUILD` file:
+4. `BUILD`ファイル内の`ios_application`内に以下の行を追加してください．  
+   また，`<your_profile_name>`にはダウンロードしたprofileの名前に置き換えてください．
 
    ```python
    provisioning_profile = "<your_profile_name>.mobileprovision",
    ```
+   
+   ダウンロードしたprofileの名前がprovisioning_profile.mobileprovisionの場合は以下のように記述します．
+   
+   ```python
+   provisioning_profile = "provisioning_profile.mobileprovision",
+   ```
+   
+   **メモ:**  デバイスにインストールしたアプリとprofileが正しいことを確認しておいてください．
 
-   **NOTE:** Ensure the profile is correct so that the app can be installed on
-   a device.
-
-Now build the app for your device:
+さて，アプリケーションをデバイスにビルドしましょう
 
 ```bash
 bazel build //ios-app:ios-app --ios_multi_cpus=armv7,arm64
