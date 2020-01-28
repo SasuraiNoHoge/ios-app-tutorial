@@ -78,6 +78,7 @@ open -a Xcode $WORKSPACE/WORKSPACE
 
 Appleデバイスのアプリケーションをビルドするために,BazelはGitHubから最新の[Apple build rules](https://github.com/bazelbuild/rules_apple)
 をpullする必要があります．これを可能にするためには以下のように記述することで解決します．  
+`WORKSPACE`ファイルに以下の行を追加してください．
 
 ```
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
@@ -110,51 +111,35 @@ git_repository(
 **メモ:** "コード内の`build_bazel_rules_apple`の`git_repository`にて**必ず**`name`属性に値を入れてください．値がなければビルドが失敗します．"
 
 ## 今回ビルドするソースファイルについて
-今回のチュートリアルでは`WORKSPACE/ios-app/UrlGet`内のソースコードをビルドします．現状では3種類のソースコードがあることを確認してください．また今回のチュートリアルではこれらのソースコードは編集しません．以下にUrlGet内の階層構造を示します．
+今回のチュートリアルでは`WORKSPACE/ios-app/UrlGet`内のソースコードをビルドします．現状では3種類のソースコードがあることを確認してください．また今回のチュートリアルではこれらのソースコードは編集しません．以下にWORKSPACEから見たUrlGet内の階層構造を示します．  
+![WORKSPACを作成した階層](tree2.png)
 
+## BUILDファイルの作成
 
-Take a look at the source files for the app located in
-`$WORKSPACE/ios-app/UrlGet`. Again, you're just looking at these files now to
-become familiar with the structure of the app. You don't have to edit any of the
-source files to complete this tutorial.
-
-## Create a BUILD file
-
-At a command-line prompt, open a new `BUILD` file for editing:
+コマンドラインプロンプトから新しい`BUILD`ファイルを開いて作成してください．
 
 ```bash
 touch $WORKSPACE/ios-app/BUILD
 open -a Xcode $WORKSPACE/ios-app/BUILD
 ```
 
-### Add the rule load statement
+### BUILDファイルにどのデバイスのルールでビルドするのかを決定する宣言を追加
 
-To build iOS targets, Bazel needs to load build rules from its GitHub repository
-whenever the build runs. To make these rules available to your project, add the
-following load statement to the beginning of your `BUILD` file:
+iOSをビルドするために，BazelはGitHubリポジトリからビルドして実行できるかを調べるbuild rurlesをロードする必要があります．以下の行を`BUILD`ファイルに追加してください．
 
 ```
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_application")
 ```
 
-We only need to load the `ios_application` rule because the `objc_library` rule
-is built into the Bazel package.
+今回は`iOS_application`ruleだけをロードします．なぜなら，後ほど登場する`objc_library`ルールはBazel packageに予め存在しているためです．
 
-### Add an objc_library rule
+### objc_library ruleの追加
 
-Bazel provides several build rules that you can use to build an app for the
-iOS platform. For this tutorial, you'll first use the
-[`objc_library`](../be/objective-c.html#objc_library) rule to tell Bazel
-how to build a static library from the app source code and Xib files. Then
-you'll use the
-[`ios_application`](https://github.com/bazelbuild/rules_apple/tree/master/doc)
-rule to tell it how to build the application binary and the `.ipa` bundle.
+Bazelでは，iOSプラットフォームをビルドするために使うことができるいくつかのビルドルールが存在します．このチュートリアルでは，最初に`objc_library`ruleを使って，アプリのソースコードやXibファイルから静的なライブラリをビルドする方法を伝えます．それから，`ios_application`ルールを使って，アプリのバイナリや`.ipa`bundleのビルド方法について紹介します．  
 
-**NOTE:** This tutorial presents a minimal use case of the Objective-C rules in
-Bazel. For example, you have to use the `ios_application` rule to build
-multi-architecture iOS apps.
+**メモ:** このチュートリアルは最小限のBazelのObjective-Cのrulesのケースを使います．例えば，あなたが，iOSアプリをmulti-architectureでビルドするためには`[iOS_application](https://github.com/bazelbuild/rules_apple/tree/master/doc)`ruleを使わなければなりません．
 
-Add the following to your `BUILD` file:
+以下のコードを`BUILD`ファイルの末尾に追加してください．
 
 ```python
 objc_library(
@@ -169,11 +154,12 @@ objc_library(
 )
 ```
 
-Note the name of the rule, `UrlGetClasses`.
+ここでは，ruleのnameをUrlGetClassesに設定しました．
 
-### Add an ios_application rule
+### ios_application ruleの追加
 
-The
+`ios_application`ruleはapplication binaryのビルドと，'.ipa'bundle ファイルの作成です．
+
 [`ios_application`](https://github.com/bazelbuild/rules_apple/tree/master/doc)
 rule builds the application binary and creates the `.ipa` bundle file.
 
