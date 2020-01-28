@@ -111,7 +111,7 @@ git_repository(
 **メモ:** "コード内の`build_bazel_rules_apple`の`git_repository`にて**必ず**`name`属性に値を入れてください．値がなければビルドが失敗します．"
 
 ## 今回ビルドするソースファイルについて
-今回のチュートリアルでは`WORKSPACE/ios-app/UrlGet`内のソースコードをビルドします．現状では3種類のソースコードがあることを確認してください．また今回のチュートリアルではこれらのソースコードは編集しません．以下にWORKSPACEから見たUrlGet内の階層構造を示します．  
+今回のチュートリアルでは`WORKSPACE/ios-app/UrlGet`内のソースコードをビルドします．現状では3種類のソースコードがあることを確認してください．また今回のチュートリアルではこれらのソースコードは編集しません．以下に`$WORKSPACE`から見た`UrlGet`内の階層構造を示します．  
 ![WORKSPACを作成した階層](tree2.png)
 
 ## BUILDファイルの作成
@@ -122,6 +122,9 @@ git_repository(
 touch $WORKSPACE/ios-app/BUILD
 open -a Xcode $WORKSPACE/ios-app/BUILD
 ```
+
+以下に`$WORKSPACE`から見た`BUILD`ファイルの階層構造を示します．   
+![WORKSPACを作成した階層](tree3.png)
 
 ### BUILDファイルにどのデバイスのルールでビルドするのかを決定する宣言を追加
 
@@ -158,12 +161,9 @@ objc_library(
 
 ### ios_application ruleの追加
 
-`ios_application`ruleはapplication binaryのビルドと，'.ipa'bundle ファイルの作成です．
+`ios_application`ruleはapplication binaryのビルドと，'.ipa'bundle ファイルを作成します．
 
-[`ios_application`](https://github.com/bazelbuild/rules_apple/tree/master/doc)
-rule builds the application binary and creates the `.ipa` bundle file.
-
-Add the following to your `BUILD` file:
+`BUILD`ファイルの末尾に以下の行を追加してください
 
 ```python
 ios_application(
@@ -180,41 +180,33 @@ ios_application(
 )
 ```
 
-**NOTE:** Please update the `minimum_os_version` attribute to the minimum
-version of iOS that you plan to support.
+**メモ:** コード内の`minimum_os_version`属性はあなたがサポートするiOSのバージョンにアップデートしておいてください．  
 
-Note how the `deps` attribute references the output of the `UrlGetClasses` rule
-you added to the `BUILD` file above.
+コード内の`deps`属性は先ほど，`objc_library`rule内の`name`で宣言した値である`UrlGetClasses`を参照します．  
 
-Now, save and close the file. You can compare your `BUILD` file to the
-[completed example](https://github.com/bazelbuild/examples/blob/master/tutorial/ios-app/BUILD)
-in the `master` branch of the GitHub repo.
+さて，`WORKSPACE`と`BUILD`ファイルを保存して閉じてください．今作った`BUILD`ファイルはGitHubリポジトリの[completed example](https://github.com/bazelbuild/examples/blob/master/tutorial/ios-app/BUILD)の`master`ブランチで比較することができます．
 
-## Build and deploy the app
+## アプリケーションをビルドしてデプロイしよう
 
-You are now ready to build your app and deploy it to a simulator and onto an
-iOS device.
+iOSデバイスのシミュレータ上でのビルドとデプロイの準備が整いました．
 
-**NOTE:** The app launches standalone but requires a backend server in order to
-produce output. See the README file in the sample project directory to find out
-how to build the backend server.
+**メモ:** アプリケーションをスタンドアロンで実行できますが，出力するためのbackend サーバが必要です．backend serverをビルドするための sample project directryからREADME ファイルを確認してください．
 
-### Build the app for the simulator
+### シミュレータのためのアプリケーションをビルド
 
-Make sure that your current working directory is inside your Bazel workspace:
+以下のコマンドで`$WORKSPACE`に移動してください
 
 ```bash
 cd $WORKSPACE
 ```
 
-Now, enter the following to build the sample app:
+sampleアプリケーションをビルドするために以下のコマンドを実行してください．
 
 ```bash
 bazel build //ios-app:ios-app
 ```
 
-Bazel launches and builds the sample app. During the build process, its
-output will appear similar to the following:
+Bazelが作動して，sampleアプリケーションをビルドします．ビルド中は，以下のような出力が現れます．
 
 ```bash
 INFO: Found 1 target...
@@ -223,10 +215,11 @@ Target //ios-app:ios-app up-to-date:
 INFO: Elapsed time: 0.565s, Critical Path: 0.44s
 ```
 
-### Find the build outputs
+### 出力されたファイルを見つける
 
-The `.ipa` file and other outputs are located in the
-`$WORKSPACE/bazel-bin/ios-app` directory.
+`.ipa`ファイルとそれ以外の出力が`$WORKSPACE/bazel-bin/ios-app`ディレクトリに位置付けられます．  
+以下に$WORKSPACEから見た.ipaの階層構造を示します．
+
 
 ### Run and debug the app in the simulator
 
